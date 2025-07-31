@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Palm Scanner</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      background: black;
+    }
+
+    /* Initial background image */
+    .initial-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url('image/homepage.jpg') no-repeat center center;
+      background-size: cover;
+      z-index: 10;
+      opacity: 1;
+      transition: opacity 1.5s ease-in-out;
+    }
+
+    .fade-out {
+      opacity: 0;
+    }
+
+    /* Scanner screen */
+    .scanner-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(to bottom, rgba(0,255,0,0.1), black);
+      box-shadow: 0 0 50px rgb(6, 68, 13) inset, 0 0 30px rgb(16, 59, 2);
+      border: 5px solid rgba(3, 65, 8, 0.8);
+      z-index: 20;
+      animation: pulseBorder 1.5s infinite ease-in-out;
+    }
+
+    @keyframes pulseBorder {
+      0%, 100% { box-shadow: 0 0 30px rgb(44, 214, 120) inset, 0 0 20px rgb(21, 80, 27); }
+      50% { box-shadow: 0 0 60px rgb(17, 86, 30) inset, 0 0 40px rgb(3, 92, 23); }
+    }
+
+    .scan-line {
+      position: absolute;
+      width: 100%;
+      height: 3px;
+      background: lime;
+      box-shadow: 0 0 10px lime, 0 0 30px lime;
+      animation: moveScan 2s infinite ease-in-out;
+    }
+
+    .scan-line:nth-child(2) { animation-delay: 0.3s; }
+    .scan-line:nth-child(3) { animation-delay: 0.6s; }
+
+    @keyframes moveScan {
+      0% { top: 0; }
+      50% { top: 90%; }
+      100% { top: 0; }
+    }
+
+    .scanner-text {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      color: white;
+      font-size: 2rem;
+      text-shadow: 0 0 10px #0f0;
+      animation: blinkText 1s infinite;
+    }
+
+    @keyframes blinkText {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Initial background -->
+<div class="initial-bg" id="initialBg"></div>
+
+<!-- Scanner overlay -->
+<div class="scanner-overlay" id="scannerOverlay">
+  <div class="scan-line"></div>
+  <div class="scan-line"></div>
+  <div class="scan-line"></div>
+  <div class="scanner-text"></div>
+</div>
+
+<!-- Script -->
+<script>
+  window.onload = function () {
+    // Step 1: Wait 2 seconds then fade out background and show scanner
+    setTimeout(() => {
+      const bg = document.getElementById('initialBg');
+      const scanner = document.getElementById('scannerOverlay');
+
+      bg.classList.add('fade-out');
+      
+      setTimeout(() => {
+        bg.style.display = 'none';
+        scanner.style.display = 'block';
+      }, 800); // Wait for fade to complete
+
+    }, 1000);
+
+    // Step 2: After 5000 seconds, redirect to processing page
+    setTimeout(() => {
+      window.location.href = 'process.html';
+    }, 5000); // 5000 seconds = 5,000,000 milliseconds
+  };
+</script>
+
+</body>
+</html>

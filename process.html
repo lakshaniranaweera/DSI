@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Processing...</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      background: black;
+    }
+
+    /* Animated full page border (green pulse) */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      border: 10px solid #00ff00;
+      box-sizing: border-box;
+      z-index: 999;
+      pointer-events: none;
+      animation: borderPulse 2s infinite;
+      transition: opacity 0.5s ease;
+      opacity: 1;
+    }
+
+    /* Disable border by hiding ::before */
+    body.no-border::before {
+      opacity: 0;
+      animation: none;
+      pointer-events: none;
+    }
+
+    @keyframes borderPulse {
+      0%, 100% { box-shadow: 0 0 20px #00ff00, inset 0 0 20px #00ff00; }
+      50% { box-shadow: 0 0 40px #00ff00, inset 0 0 40px #00ff00; }
+    }
+
+    /* Centered container for the icon */
+    .center-box {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 10;
+    }
+
+    /* Background image slowly revealed */
+    .background-reveal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('image/lst1.jpg') no-repeat center center;
+      background-size: cover;
+      opacity: 0;
+      z-index: 1;
+      animation: revealBg 4s forwards 2s;
+    }
+
+    @keyframes revealBg {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    /* Processing Icon Styles */
+    .processing-icon {
+      width: 250px;
+      height: 180px;
+      background: black;
+      border-radius: 12px;
+      box-shadow: 0 0 30px #00ff00, inset 0 0 5px #00ff00;
+      position: relative;
+      overflow: hidden;
+      transform: perspective(800px) rotateX(10deg);
+    }
+
+    /* Scanning flash effect */
+    .flash-line {
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent 0%, white 50%, transparent 100%);
+      opacity: 0.4;
+      animation: flashDown 3s infinite ease-in-out;
+    }
+
+    @keyframes flashDown {
+      0% { top: -100%; opacity: 0; }
+      30% { opacity: 0.5; }
+      50% { top: 0%; opacity: 0.8; }
+      100% { top: 100%; opacity: 0; }
+    }
+
+    .processing-text {
+      color: #00ff00;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      animation: blink 1.5s infinite;
+      user-select: none;
+      text-shadow: 0 0 5px #00ff00;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="background-reveal"></div>
+
+<!-- <div class="center-box">
+  <div class="processing-icon"> -->
+    <div class="flash-line"></div>
+  </div>
+  <div class="processing-text">සැකසෙමින් පවතී!</div>
+</div>
+
+<!-- Bootstrap JS (optional) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // Remove green border after background fully reveals (6s total delay)
+  setTimeout(() => {
+    document.body.classList.add('no-border');
+  }, 1000);
+
+// Step 2: After 5000 seconds, redirect to processing page
+    setTimeout(() => {
+      window.location.href = 'home.html';
+    }, 9000); // 5000 seconds = 5,000,000 milliseconds
+  
+  
+</script>
+
+</body>
+</html>
