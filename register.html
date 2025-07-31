@@ -1,18 +1,21 @@
+<!-- HTML DOCTYPE and language setup -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Character and viewport setup -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DSI Registration</title>
 
-  <!-- Bootstrap CSS -->
+  <!-- ✅ Include Bootstrap CSS from CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- Custom Style -->
+  <!-- ✅ Custom Styles -->
   <style>
     html, body {
       height: 100%;
       margin: 0;
+      /* ⚠️ Manually ensure this image exists in /image/homepage.jpg */
       background: url('image/homepage.jpg') no-repeat center center fixed;
       background-size: cover;
       font-family: 'Segoe UI', sans-serif;
@@ -20,7 +23,7 @@
     }
 
     .overlay {
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(0, 0, 0, 0.5); /* Dim the background */
       height: 100%;
       padding: 40px 20px;
     }
@@ -31,7 +34,7 @@
       padding: 30px;
       max-width: 400px;
       margin: auto;
-      box-shadow: 0 0 30px rgba(0,255,0,0.5);
+      box-shadow: 0 0 30px rgba(0,255,0,0.5); /* Green neon glow */
       animation: fadeIn 1s ease-in-out;
     }
 
@@ -41,9 +44,10 @@
       color: white;
       text-align: center;
       margin-bottom: 20px;
-      animation: glow 2s infinite alternate;
+      animation: glow 2s infinite alternate; /* Pulsing glow effect */
     }
 
+    /* ✨ Glowing text effect */
     @keyframes glow {
       0% { text-shadow: 0 0 10px red; }
       100% { text-shadow: 0 0 20px green; }
@@ -59,33 +63,33 @@
       border: none;
     }
 
- .start-scan-btn {
-  width: 100%;
-  font-size: 1.3rem;
-  padding: 12px;
-  transition: all 0.2s ease;
-  border: 2px solid white;
-  background-color: transparent;
-  color: white;
-}
+    .start-scan-btn {
+      width: 100%;
+      font-size: 1.3rem;
+      padding: 12px;
+      transition: all 0.2s ease;
+      border: 2px solid white;
+      background-color: transparent;
+      color: white;
+    }
 
-.start-scan-btn:focus,
-.start-scan-btn:active {
-  background-color: green !important;
-  color: white !important;
-  border-color: green !important;
-  box-shadow: 0 0 15px green;
-}
-
-
+    .start-scan-btn:focus,
+    .start-scan-btn:active {
+      background-color: green !important;
+      color: white !important;
+      border-color: green !important;
+      box-shadow: 0 0 15px green;
+    }
   </style>
 </head>
-<body>
 
+<body>
+<!-- 🧱 Fullscreen overlay and form card -->
 <div class="overlay d-flex align-items-center justify-content-center">
   <div class="form-container">
     <div class="form-title">Registration Form</div>
 
+    <!-- 📄 FORM starts -->
     <form id="regForm">
       <div class="mb-3">
         <label for="fullName" class="form-label text-white">Full Name</label>
@@ -98,16 +102,18 @@
         <div class="form-text text-light">Enter 10 digit number only.</div>
       </div>
 
-     <button type="submit" class="btn btn-outline-light start-scan-btn">Start Scanning</button>
-
+      <!-- 🚀 Call your backend on click -->
+      <button type="submit" class="btn btn-outline-light start-scan-btn">Start Scanning</button>
     </form>
   </div>
 </div>
 
-<!-- Bootstrap Bundle with Popper -->
+<!-- ✅ Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+<!-- ✅ JavaScript to handle form -->
 <script>
+  // Submit form logic
   document.getElementById('regForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -119,8 +125,7 @@
       return;
     }
 
-    // --- 🚀 Send to your backend or Firebase/MongoDB ---
-    // Example:
+    // 📦 Data to send
     const userData = {
       name: fullName,
       phone: phone
@@ -128,16 +133,28 @@
 
     console.log("Saving to database:", userData);
 
-    // 🔔 Optional: Trigger your SMS API here (e.g., Twilio)
-    // Example: sendSMS(phone);
+    // ⚠️ You must MANUALLY configure backend URL or Firebase function
+    fetch("http://localhost:3000/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(userData)
+    })
+    .then(response => {
+      if (!response.ok) throw new Error("Failed to register");
+      // ✅ Redirect to scan page after success
+      window.location.href = "scan.html";
+    })
+    .catch(err => {
+      alert("Error saving data: " + err.message);
+    });
 
-    // Redirect to scanner
-    window.location.href = "scan.html";
+    // 🔔 Optional: trigger local SMS function here if needed
+    // sendSMS(phone);
   });
 
-  // Optional dummy SMS function
   function sendSMS(phone) {
-    // Integrate with backend API here
     alert("SMS sent to " + phone);
   }
 </script>
